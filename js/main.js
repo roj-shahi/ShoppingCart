@@ -11,7 +11,7 @@ var ShoppingCart = (function() {
       totalPriceHeadEl = document.querySelector(".total-price-head"),
       sortEl = document.querySelector(".sorts"),
       sortDropDownEl = document.querySelector("#sortsDropdown");
-      
+
   var products = [],
       productsInCart = [];
 
@@ -59,22 +59,89 @@ var ShoppingCart = (function() {
       productsEl.appendChild(productEl);
     });
   }
+
+  var plusItemInCart = function(id) {
+    productsInCart.forEach(function(item) {
+      if(item.product.id === id) {
+        item.quantity++;
+      }
+    });
+  }
+
+  var minusItemInCart = function(id) {
+    productsInCart.forEach(function(item) {
+      if(item.product.id === id) {
+        item.quantity--;
+      }
+    });
+  }
+
+  var removeItemFromCart = function(id) {
+    productsInCart = productsInCart.filter((item) => item.product.id != id);
+  }
   
   var generateCartList = function() {
     let totalProductsInCart = 0;
     cartEl.innerHTML = "";
     
     productsInCart.forEach(function(item) {
-      var li = document.createElement("li");
-      li.innerHTML = `<h6 class="product-name">${item.product.title} <small class="extra-info">${item.product.variants[0].title} (${item.quantity})</small></h6><span class="product-price">£${item.product.variants[0].price * item.quantity}</span>`;
+      let li = document.createElement("li");
+      let minusItemEl = (item.quantity > 1 ? '<a class="item-icon minus-item" title="Remove Item">Minus</a>' : '');
+
+      li.className = "hide-icon";
+      li.innerHTML = `<h6 class="product-name">
+                        ${item.product.title} 
+                        <small class="extra-info">${item.product.variants[0].title} (${item.quantity})</small> 
+                        ${minusItemEl}
+                        <a class="item-icon plus-item" title="Add More">Add</a>
+                        <a class="item-icon remove-item" title="Remove Items">Bin</a>
+                        </h6>
+                        <span class="product-price">£${item.product.variants[0].price * item.quantity}</span>
+                      `;
       cartEl.appendChild(li);
+
+      let removeItem = li.querySelector(".remove-item");
+      let plusItem = li.querySelector(".plus-item");
+      let minusItem = li.querySelector(".minus-item");
+
+      removeItem.addEventListener("click", function(event) {
+        removeItemFromCart(item.product.id);
+        li.remove();
+        generateCartList();
+        return false;
+      });
+
+      plusItem.addEventListener("click", function(event) {
+        plusItemInCart(item.product.id);
+        generateCartList();
+        return false;
+      });
+      if (minusItem) {
+        minusItem.addEventListener("click", function(event) {
+          minusItemInCart(item.product.id);
+          generateCartList();
+          return false;
+        });
+      }
+
+
+      li.addEventListener("mouseover", function(event) {
+        li.className = "show-icon";
+      });
+
+      li.addEventListener("mouseout", function(event) {
+        li.className = "hide-icon";
+      });
+
     });
 
     totalProductsInCart = productsInCart.length;
     productQuantityEl.innerHTML = totalProductsInCart;
     productQuantityHeadEl.innerHTML = totalProductsInCart;
-    generateCartButtons()
+    generateCartButtons();
   }
+
+
   
   
   // Function that generates Checkout buttons based on condition that checks if productsInCart array is empty
@@ -179,11 +246,12 @@ var ShoppingCart = (function() {
     if(productsInCart.length === 0 || productFound(obj.id) === undefined) {
       productsInCart.push({product: obj, quantity: 1});
     } else {
-      productsInCart.forEach(function(item) {
-        if(item.product.id === obj.id) {
-          item.quantity++;
-        }
-      });
+      plusItemInCart(obj.id);
+      // productsInCart.forEach(function(item) {
+      //   if(item.product.id === obj.id) {
+      //     item.quantity++;
+      //   }
+      // });
     }
     generateCartList();
   }
