@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Listing</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+  <div class="container top-bar">
+      <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+      <div class="row justify-content-center">
+        <div class="col col-md-8 col-sm-4 brand-wrap"><a class="brand">Eclectees</a></div>
+        <div class="col col-md-2 col-sm-4 align-right">
+          <a class="cart"><span class="total-price-head">£0</span> <span class="product-quantity-head">0</span></a>
+        </div>
+        <div class="col col-md-2 col-sm-4 align-right">
+          <a class="menu-btn">
+              <!-- <span class="bar hidden">Menu button</span> -->
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+          </a>
+        </div>
+      </div>
+
+  </div>
+  <div class="container-fluid banner">&nbsp;</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 products-options">
+        <label>Sort by</label>
+        <select id="sortsDropdown" class="select">
+          <option value="">Select</option>
+          <option value="price-desc">Price High - Low</option>
+          <option value="price-asc">Price Low - High</option>
+          <option value="name-asc">Title A - Z</option>
+          <option value="name-desc">Title Z - A</option>
+        </select>
+      </div>
+
+      <div class="col col-md-3">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-9 col-sm-12 col-xs-12 products d-flex flex-direction-column flex-wrap justify-content-between">
+    
+      </div><!-- /products -->
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="shopping-cart">
+          <div class="shopping-cart-head">
+            Cart <span class="product-quantity">0</span> 
+          </div>
+          <ul class="shopping-cart-list">
+            <li>Cart is empty.</li>
+          </ul>
+          <div class="cart-buttons">
+            <a href="#0" class="button cart-checkout">Total  <span class="total-price">£0</span></a>
+          </div>
+        </div><!-- /shopping-cart -->
+      </div>
+    </div>
+  </div><!-- /container -->
+  <div class="container footer">
+    <div class="row">
+      <div class="col col-md-4 col-sm-6"><a class="brand">Eclectees</a></div>
+      <div class="col col-md-4 col-sm-6 align-center"><small class="copyright">&copy; Eclectees Co Ltd 2018</small></div>
+      <div class="col col-md-4 col-sm-6">
+        <ul>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li>|</li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li>|</li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- /container -->
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
+
+  
