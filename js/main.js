@@ -1,7 +1,7 @@
 var ShoppingCart = (function() {
   "use strict";
   
-  // Cahce necesarry DOM Elements
+  // Cache necesarry DOM Elements
   var productsEl = document.querySelector(".products"),
       cartEl =     document.querySelector(".shopping-cart-list"),
       productQuantityEl = document.querySelector(".product-quantity"),
