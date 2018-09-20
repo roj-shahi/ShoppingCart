@@ -1,7 +1,6 @@
 var ShoppingCart = (function() {
   "use strict";
   
-  // Cache necesarry DOM Elements
   var productsEl = document.querySelector(".products"),
       cartEl =     document.querySelector(".shopping-cart-list"),
       productQuantityEl = document.querySelector(".product-quantity"),
@@ -15,28 +14,18 @@ var ShoppingCart = (function() {
   var products = [],
       productsInCart = [];
 
-
   var getProducts = function() {
-    let request = new XMLHttpRequest();
-    request.open('GET', 'https://j-parre.myshopify.com/products.json', true);
-    request.onload = function () {
-
-      // Begin accessing JSON data here
-      products = JSON.parse(this.response).products;
-      
-      //products = this.response.products;
-      if (request.status >= 200 && request.status < 400) {
+    const url = 'https://j-parre.myshopify.com/products.json';
+    fetch(url)
+      .then((resp) => resp.json())
+      .then((data) => {
+        products = data.products;
         generateProductList();
         setupListeners();
-        
-      } else {
-        productsEl.innerHTML = `ohhhh no, it's not working!`;
-      }
-    }
-
-    request.onerror = function() { productsEl.innerHTML = "Sorry! Something wrong with request URL."};
-    request.send();
-
+      })
+      .catch((error) => {
+        productsEl.innerHTML = error;
+      });
   }
   
   var generateProductList = function() {
@@ -247,11 +236,6 @@ var ShoppingCart = (function() {
       productsInCart.push({product: obj, quantity: 1});
     } else {
       plusItemInCart(obj.id);
-      // productsInCart.forEach(function(item) {
-      //   if(item.product.id === obj.id) {
-      //     item.quantity++;
-      //   }
-      // });
     }
     generateCartList();
   }
